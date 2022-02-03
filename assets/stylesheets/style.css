@@ -64,6 +64,7 @@ html, body {
 
 .content {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 
@@ -83,6 +84,14 @@ html, body {
 
 .footer > * {
   padding-bottom: 0.25em;
+}
+
+.gameboards {
+  display: flex;
+}
+
+.gameboard-row {
+  display: flex;
 }
 
 .github-profile-container {

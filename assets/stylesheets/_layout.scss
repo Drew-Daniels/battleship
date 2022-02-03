@@ -6,6 +6,7 @@
 
 .content {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 
@@ -24,4 +25,11 @@
 }
 .footer > * {
   padding-bottom: .25em;
+}
+
+.gameboards {
+  display: flex;
+}
+.gameboard-row {
+  display: flex;
 }
