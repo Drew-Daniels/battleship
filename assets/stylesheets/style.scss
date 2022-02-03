@@ -3,6 +3,17 @@
 @use 'font';
 @use 'layout';
 
+.github-profile-container {
+  display: flex;
+  justify-content: center;
+}
+.github-profile-container > * {
+  padding-right: .25em;
+}
 .github-icon {
   height: 2em;
+}
+.header-text {
+  font-size: 4em;
+  text-align:center;
 }
