@@ -40,6 +40,22 @@
   flex-basis: 50%;
   margin: 4em 0;
 }
+.gb-col-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3em;
+  width: 3em;
+  border: solid black 1px;
+}
+.gb-row-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3em;
+  width: 3em;
+  border: solid black 1px;
+}
 .gb-row {
   display: flex;
 }
@@ -50,4 +66,5 @@
   height: 3em;
   width: 3em;
   border: solid black 1px;
+  background: #89e2ee;
 }
