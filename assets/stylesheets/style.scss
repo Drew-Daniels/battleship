@@ -17,3 +17,12 @@
   font-size: 4em;
   text-align:center;
 }
+.gb-cell.hit {
+  background: #f57a7a;
+}
+.gb-cell.miss {
+  background: rgba(80, 194, 124, 0.753);
+}
+.gb-cell.ship {
+  background: gray;
+}

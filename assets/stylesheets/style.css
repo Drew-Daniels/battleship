@@ -107,6 +107,7 @@ html, body {
   align-items: center;
   height: 3em;
   width: 3em;
+  border-radius: 4%;
   border: solid black 1px;
 }
 
@@ -116,6 +117,7 @@ html, body {
   align-items: center;
   height: 3em;
   width: 3em;
+  border-radius: 4%;
   border: solid black 1px;
 }
 
@@ -130,6 +132,7 @@ html, body {
   height: 3em;
   width: 3em;
   border: solid black 1px;
+  border-radius: 4%;
   background: #89e2ee;
 }
 
@@ -149,6 +152,18 @@ html, body {
 .header-text {
   font-size: 4em;
   text-align: center;
+}
+
+.gb-cell.hit {
+  background: #f57a7a;
+}
+
+.gb-cell.miss {
+  background: rgba(80, 194, 124, 0.753);
+}
+
+.gb-cell.ship {
+  background: gray;
 }
 
 /*# sourceMappingURL=style.css.map */
