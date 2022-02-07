@@ -32,7 +32,6 @@ const Ship = (type, horizontal=true) => {
   // destroyer._positions = [false, false]
   // destroyer.hit(0) => [true, false]
   const _positions = Array(length).fill(false);
-  console.log(_positions);
   /**
    * Takes an integer and marks that position of a ship as 'hit'
    * @param {int} hitPos 
@@ -82,62 +81,203 @@ const Ship = (type, horizontal=true) => {
     isSunk,
   }
 }
-
+/**
+ * 
+ * @param {boolean} human 
+ * @returns 
+ */
 const Gameboard = (human=true) => {
+  const SHIPS = [];
+  const MISSES = [];
   const board = [
     // row 1
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 2 
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 3 
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 4 
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 5 
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 6
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 7 
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 8 
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 9 
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
     // row 10 
     [
-      [''], [''], [''], [''],  [''],  [''],  [''],  [''],  [''],  ['']
+      [], [], [], [], [], [], [], [], [], []
     ],
   ]
 
+  const getBoard = () => {
+    return board;
+  }
+
+  const getShip = (shipType) => {
+    let res;
+    SHIPS.forEach(function(ship) {
+      if (ship.getType() === shipType) {
+        res = ship;
+      }
+    })
+
+    return res;
+  }
+
+  /**
+   * Used to check if a pair of coordinates already contains a ship
+   * @param {int} row 
+   * @param {int} col 
+   * @returns
+   */
+  const containsShip = (row, col) => {
+    return typeof board[row][col][0] === 'object';
+  }
+
+  /**
+   * Takes a pair of coordinates, and marks those coordinates as containing a ship
+   * @param {int} startRow 
+   * @param {int} startCol 
+   * @param {Ship object} ship 
+   * @returns 
+   */
+  const placeShip = (startRow, startCol, ship) => {
+    const isHorizontal = ship.isHorizontal();
+    const shipLength = ship.getLength();
+    // first check to make sure none of the coordinates contain a ship already
+    for (let i=0; i <= shipLength-1; i++) {
+      if (isHorizontal) {
+        if (containsShip(startRow, startCol+i)) {
+          throw new Error('These coordinates overlap with another ship');
+        };
+      } else {
+        if (containsShip(startRow+i, startCol)) {
+          throw new Error('These coordinates overlap with another ship')
+        }
+      }
+    }
+    for (let i=0; i <= shipLength-1; i++) {
+      // stay within the same row and iterate columns
+      if (isHorizontal) {
+        board[startRow][startCol+i][0] = {
+          shipType: ship.getType(),
+          shipPosition: i,
+          isHit: false,
+        }
+      // stay within the same column and iterate rows
+      } else {
+        board[startRow+i][startCol][0] = {
+          shipType: ship.getType(),
+          shipPosition: i,
+          isHit: false,
+        }
+      }
+    }
+    SHIPS.push(ship);
+    return board;
+  }
+
+  /**
+   * Takes a pair of coordinates and tests to see if those coordinates retrieve an object
+   * if so - a ship position is located there
+   * if not - a ship position is not located there, and these coordinates will be logged as a miss
+   * @param {int} row 
+   * @param {int} col 
+   */
+  const receiveAttack = (row, col) => {
+    const item = board[row][col][0];
+    // if these coordinates contain an object, the object is that which contains the following properties:
+    // {
+    //  shipType: 'carrier' || 'battleship' || 'cruiser' || 'submarine' || 'destroyer'
+    //  shipPosition: integer from 0 to 4, depending on the length of the ship
+    //  isHit: true || false
+    // }
+    if (typeof item === 'object') {
+      if (item.isHit) {
+        throw new Error('This ship has already been hit in this location!');
+      }
+      const ship = getShip(item.shipType);
+      const hitPosition = item.shipPosition;
+      ship.hit(hitPosition);
+      item.isHit = true;
+      // check if ship is sunk and do something
+
+    } else {
+      // if no ship here, log the miss
+      board[row][col][0] = 'miss';
+    }
+    return board;
+  }
+
+  const allShipsSunk = () => {
+
+  }
+
   return {
-    board
+    placeShip,
+    receiveAttack,
+    getBoard,
   };
 }
 
 const Player = (human=true) => {
   const isHuman = () => human;
+
   return {
     isHuman,
   };
 }
+
+const selfTest = () => {
+  // Create ships
+  const dummyCarrierH = Ship('carrier');
+  const dummyCarrierV = Ship('carrier', false);
+
+  const dummyBattleshipH = Ship('battleship');
+  const dummyBattleshipV = Ship('battleship', false);
+
+  const dummyCruiserH = Ship('cruiser');
+  const dummyCruiserV = Ship('cruiser', false);
+
+  const dummySubmarineH = Ship('submarine');
+  const dummySubmarineV = Ship('submarine', false);
+
+  const dummyDestroyerH = Ship('destroyer');
+  const dummyDestroyerV = Ship('destroyer', false);
+
+  const dummyGameboardHuman = Gameboard();
+  const dummyGameboardAI = Gameboard(false);
+
+  console.log(dummyGameboardHuman.placeShip(0, 0, dummyDestroyerH));
+  console.log(dummyGameboardAI.placeShip(0, 0, dummyDestroyerV));
+
+  console.log(dummyGameboardHuman.receiveAttack(0,0))
+}
+
+selfTest();
 
 module.exports = {
   Ship,
