@@ -33,7 +33,7 @@ const Ship = (type, horizontal=true) => {
   // destroyer.hit(0) => [true, false]
   const _positions = Array(length).fill(false);
   /**
-   * Takes an integer and marks that position of a ship as 'hit'
+   * Takes an integer and marks that position of a ship as 'hit' by filling in that index with true
    * @param {int} hitPos 
    */
   const hit = (hitPos) => {
@@ -68,10 +68,6 @@ const Ship = (type, horizontal=true) => {
     }
     return hitPositions;
   }
-
-  /**
-   * Returns whether or not a ship is sunk based on whether or not the number of its positions hit and length are equal
-   */
 
   return {
     getType, 
@@ -286,29 +282,6 @@ const Player = (human=true) => {
     isHuman,
   };
 }
-
-const selfTest = () => {
-  // Create ships
-  const dummyCarrierH = Ship('carrier');
-  const dummyCarrierV = Ship('carrier', false);
-
-  const dummyBattleshipH = Ship('battleship');
-  const dummyBattleshipV = Ship('battleship', false);
-
-  const dummyCruiserH = Ship('cruiser');
-  const dummyCruiserV = Ship('cruiser', false);
-
-  const dummySubmarineH = Ship('submarine');
-  const dummySubmarineV = Ship('submarine', false);
-
-  const dummyDestroyerH = Ship('destroyer');
-  const dummyDestroyerV = Ship('destroyer', false);
-
-  const dummyGameboardHuman = Gameboard();
-  const dummyGameboardAI = Gameboard(false);
-}
-
-// selfTest();
 
 module.exports = {
   Ship,
