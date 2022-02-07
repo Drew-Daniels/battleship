@@ -72,7 +72,6 @@ describe('Carrier tests', () => {
       expect(carrierH.getLength()).toBe(5);
     });
   });
-  // direction
   describe('Direction tests', () => {
     test('Creates a Carrier with a default direction of horizontal', () => {
       expect(carrierH.isHorizontal()).toBe(true);
@@ -190,16 +189,15 @@ describe('Cruiser tests', () => {
     test('Creates a Cruiser with a length of 3', () => {
       expect(cruiserH.getLength()).toBe(3);
     });
-  })
+  });
   describe('Direction', () => {
-  // direction
-  test('Creates a Cruiser with a default direction of horizontal', () => {
-    expect(cruiserH.isHorizontal()).toBe(true);
+    test('Creates a Cruiser with a default direction of horizontal', () => {
+      expect(cruiserH.isHorizontal()).toBe(true);
+    });
+    test('Creates a Cruiser with a specified direction of vertical', () => {
+      expect(cruiserV.isHorizontal()).toBe(false);
+    });
   });
-  test('Creates a Cruiser with a specified direction of vertical', () => {
-    expect(cruiserV.isHorizontal()).toBe(false);
-  });
-  })
   describe('Hits', () => {
     test('A Cruiser hit at position 3 throws an error since only positions 0-2 are valid', () => {
       expect(() => {
@@ -240,16 +238,15 @@ describe('Submarine tests', () => {
     test('Creates a Submarine with a length of 3', () => {
       expect(submarineH.getLength()).toBe(3);
     });
-  })
+  });
   describe('Direction', () => {
-  // direction
-  test('Creates a Submarine with a default direction of horizontal', () => {
-    expect(submarineH.isHorizontal()).toBe(true);
+    test('Creates a Submarine with a default direction of horizontal', () => {
+      expect(submarineH.isHorizontal()).toBe(true);
+    });
+    test('Creates a Submarine with a specified direction of vertical', () => {
+      expect(submarineV.isHorizontal()).toBe(false);
+    });
   });
-  test('Creates a Submarine with a specified direction of vertical', () => {
-    expect(submarineV.isHorizontal()).toBe(false);
-  });
-  })
   describe('Hits', () => {
     // hit
     test('A Submarine hit at position 3 throws an error since only positions 0-2 are valid', () => {
@@ -293,7 +290,6 @@ describe('Destroyer tests', () => {
     });
   })
   describe('Direction', () => {
-    // direction
     test('Creates a Destroyer with a default direction of horizontal', () => {
       expect(destroyerH.isHorizontal()).toBe(true);
     });
@@ -329,7 +325,6 @@ describe('Destroyer tests', () => {
   });
 });
 
-// PLAYER tests
 describe('Player tests', () => {
   describe('Human Player tests', () => {
     test('Human player object returns correct type', () => {
@@ -343,31 +338,34 @@ describe('Player tests', () => {
   })
 });
 
-// GAMEBOARD tests
 describe('Gameboard tests', () => {
   beforeAll(() => {
     gameboardHuman.placeShip(0,0, destroyerH);
   });
   describe('Placing destroyer horizontally at R0C0 creates object references at R0C0 and R0C1', () => {
-    // ship types
-    test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
-      expect(gameboardHuman.getBoard()[0][0][0].shipType).toBe('destroyer');
-    })
-    test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
-      expect(gameboardHuman.getBoard()[0][1][0].shipType).toBe('destroyer');
-    })
-    // ship positions
-    test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
-      expect(gameboardHuman.getBoard()[0][0][0].shipPosition).toBe(0);
-    })
-    test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
-      expect(gameboardHuman.getBoard()[0][1][0].shipPosition).toBe(1);
-    })
-    test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
-      expect(gameboardHuman.getBoard()[0][0][0].isHit).toBe(false);
-    })
-    test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
-      expect(gameboardHuman.getBoard()[0][1][0].isHit).toBe(false);
+    describe('Ship Types', () => {
+      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+        expect(gameboardHuman.getBoard()[0][0][0].shipType).toBe('destroyer');
+      });
+      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
+        expect(gameboardHuman.getBoard()[0][1][0].shipType).toBe('destroyer');
+      });
+    });
+    describe('Ship Positions', () => {
+      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+        expect(gameboardHuman.getBoard()[0][0][0].shipPosition).toBe(0);
+      });
+      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
+        expect(gameboardHuman.getBoard()[0][1][0].shipPosition).toBe(1);
+      });
+    });
+    describe('Is Hit', () => {
+      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+        expect(gameboardHuman.getBoard()[0][0][0].isHit).toBe(false);
+      });
+      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
+        expect(gameboardHuman.getBoard()[0][1][0].isHit).toBe(false);
+      });
     });
   });
 });
