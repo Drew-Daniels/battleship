@@ -3,20 +3,17 @@
   flex-direction: column;
   height: 100vh;
 }
-
 .content {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
-
 .header {
   display: flex;
   width: 100vw;
   justify-content: center;
   padding-top: 1em;
 }
-
 .footer {
   display: flex;
   flex-direction: column;
@@ -26,7 +23,6 @@
 .footer > * {
   padding-bottom: .25em;
 }
-
 .gbs {
   display: flex;
   flex-wrap: wrap;

@@ -5,28 +5,28 @@
  * @returns Ship
  */
 const Ship = (type, direction='horizontal') => {
+  
+  let sunk = false;
 
   const getType = () => type;
   const getDirection = () => direction;
-  const getLength = function(type) {
-    let length;
-    switch (type) {
-      case 'carrier':
-        length = 5;
-        break;
-      case 'battleship':
-        length = 4;
-        break;
-      case 'cruiser' || 'submarine':
-        length = 3;
-        break;
-      case 'destroyer':
-        length = 2;
-        break;
-    }
+  let length;
+  switch (type) {
+    case 'carrier':
+      length = 5;
+      break;
+    case 'battleship':
+      length = 4;
+      break;
+    case 'cruiser' || 'submarine':
+      length = 3;
+      break;
+    case 'destroyer':
+      length = 2;
+      break;
   }
-  const length = getLength(type);
 
+  const getLength = () => length;
   const setAnchor = (coordinates) => {
     const startPosition = coordinates;
     if (direction === 'horizontal') {
@@ -36,18 +36,23 @@ const Ship = (type, direction='horizontal') => {
     }
   }
 
-  const hit = (position) => {
-
+  const positions = Array.from(Array(length));
+  const hit = (hitLoc) => {
+    positions[hitLoc]['x'];
   }
 
   /**
    * Returns whether or not a ship is sunk based on whether or not the number of its positions hit and length are equal
    */
-  const isSunk = () => {
+  const isSunk = () => sunk;
 
+  return {
+    getType, 
+    getDirection, 
+    getLength,
+    hit,
+    isSunk,
   }
-
-  return {getType, getDirection, getLength}
 }
 
 const Gameboard = () => {
@@ -94,9 +99,19 @@ const Gameboard = () => {
     ],
   ]
 
-  return {board};
+  return {
+    board
+  };
 }
 
 const Player = (type) => {
+  const getType = () => type;
 
+  return {getType};
 }
+
+module.exports = {
+  Ship,
+  Gameboard,
+  Player,
+};
