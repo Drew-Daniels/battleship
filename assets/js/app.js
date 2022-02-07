@@ -6,8 +6,6 @@
  */
 const Ship = (type, horizontal=true) => {
 
-  let sunk = false;
-
   const getType = () => type;
   const isHorizontal = () => horizontal;
   let length;
@@ -28,29 +26,55 @@ const Ship = (type, horizontal=true) => {
       length = 2;
       break;
   }
-
   const getLength = () => length;
-  const ctHits = () => {
+  // Create an array of 'positions' where the value in each 'position' indicates
+  // whether or not that position has been hit
+  // destroyer._positions = [false, false]
+  // destroyer.hit(0) => [true, false]
+  const _positions = Array(length).fill(false);
+  console.log(_positions);
+  /**
+   * Takes an integer and marks that position of a ship as 'hit'
+   * @param {int} hitPos 
+   */
+  const hit = (hitPos) => {
+    if (isSunk()) {
+      throw new Error('This ship is already sunk');
+    };
+    if (hitPos < _positions.length) {
+      _positions[hitPos] = true;
+    } else {
+      throw new Error('Integer provided to .hit() must be less than the length of the ship');
+    };
+    return getHitPositions();
+  }
+  const countHits = () => {
     let ct = 0;
-
+    _positions.forEach(function(_position) {
+      if (_position) {
+        ct++;
+      };
+    });
+    return ct;
   }
-  const checkIfSunk = () => {
-    // ct number of hits
-
-    // test if number of hits is equal to length
+  const isSunk = () => {
+    return length === countHits();
   }
-  const positions = Array.from(Array(length));
-  const hit = (hitLoc) => {
-    // Mark this position as hit
-    positions[hitLoc]['x'];
-    // Update 'sunk' value if all positions are hit
-
+  const getHitPositions = () => {
+    let hitPositions = [];
+    let position;
+    for (let i=0; i < _positions.length; i++) {
+      position = _positions[i];
+      if (position) {
+        hitPositions.push(i);
+      }
+    }
+    return hitPositions;
   }
 
   /**
    * Returns whether or not a ship is sunk based on whether or not the number of its positions hit and length are equal
    */
-  const isSunk = () => sunk;
 
   return {
     getType, 

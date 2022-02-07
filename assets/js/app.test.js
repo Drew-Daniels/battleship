@@ -53,13 +53,13 @@ function initializePlayers() {
 
 function initializeGameboards() {
   gameboardHuman = Gameboard();
-  gameboardAI = Gameboard();
+  gameboardAI = Gameboard(false);
 }
 
 function initializeAll() {
   initializePlayers();
   initializeShips();
-  //initial gameboards
+  initializeGameboards();
 }
 
 beforeAll(() => {
@@ -68,15 +68,65 @@ beforeAll(() => {
 
 // SHIP tests
 // Carriers
+// length
 test('Creates a Carrier with a length of 5', () => {
   expect(carrierH.getLength()).toBe(5);
 });
+// direction
 test('Creates a Carrier with a default direction of horizontal', () => {
   expect(carrierH.isHorizontal()).toBe(true);
 });
 test('Creates a Carrier with a specified direction of vertical', () => {
   expect(carrierV.isHorizontal()).toBe(false);
 });
+// hit
+test('A Carrier hit at position 5 throws an error since only positions 0-4 are valid', () => {
+  expect(() => {
+    carrierH.hit(5);
+  }).toThrow('Integer provided to .hit() must be less than the length of the ship');
+});
+
+test('A Carrier hit at position 0 returns [0] as the hit position', () => {
+  expect(carrierH.hit(0)).toEqual([0]);
+});
+test('A Carrier hit in 1/5 positions returns false with .isSunk()', () => {
+  expect(carrierH.isSunk()).toBe(false);
+});
+
+test('A Carrier hit at positions 0, 1 returns [0, 1] as the hit positions', () => {
+  expect(carrierH.hit(1)).toEqual([0, 1]);
+});
+test('A Carrier hit in 2/5 positions returns false with .isSunk()', () => {
+  expect(carrierH.isSunk()).toBe(false);
+});
+
+test('A Carrier hit at positions 0, 1, 2 returns [0, 1, 2] as the hit positions', () => {
+  expect(carrierH.hit(2)).toEqual([0, 1, 2]);
+});
+test('A Carrier hit in 3/5 positions returns false with .isSunk()', () => {
+  expect(carrierH.isSunk()).toBe(false);
+});
+
+test('A Carrier hit at positions 0, 1, 2, 3 returns [0, 1, 2, 3] as the hit positions', () => {
+  expect(carrierH.hit(3)).toEqual([0, 1, 2, 3]);
+});
+test('A Carrier hit in 4/5 positions returns false with .isSunk()', () => {
+  expect(carrierH.isSunk()).toBe(false);
+});
+
+test('A Carrier hit at position 0, 1, 2, 3, 4 returns [0, 1, 2, 3, 4] as the hit positions', () => {
+  expect(carrierH.hit(4)).toEqual([0, 1, 2, 3, 4]);
+});
+test('A Carrier hit in 5/5 positions returns true with .isSunk()', () => {
+  expect(carrierH.isSunk()).toBe(true);
+});
+
+test('A carrier that is already sunk cannot accept more hits', () => {
+  expect(() => {
+    carrierH.hit(4)
+  }).toThrow('This ship is already sunk');
+});
+
 // Battleships
 test('Creates a Battleship with a length of 4', () => {
   expect(battleshipH.getLength()).toBe(4);
