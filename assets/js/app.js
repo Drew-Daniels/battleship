@@ -40,12 +40,10 @@ const Ship = (type, horizontal=true) => {
   const hit = (hitPos) => {
     if (isSunk()) {
       throw new Error('This ship is already sunk');
-    };
-    if (hitPos < _positions.length) {
-      _positions[hitPos] = true;
-    } else {
+    } else if (hitPos >= _positions.length){
       throw new Error('Integer provided to .hit() must be less than the length of the ship');
-    };
+    }
+    _positions[hitPos] = true;
     return getHitPositions();
   }
   const countHits = () => {
