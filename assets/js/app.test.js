@@ -128,15 +128,57 @@ test('A carrier that is already sunk cannot accept more hits', () => {
 });
 
 // Battleships
+// length
 test('Creates a Battleship with a length of 4', () => {
   expect(battleshipH.getLength()).toBe(4);
 });
+// direction
 test('Creates a Battleship with a default direction of horizontal', () => {
   expect(battleshipH.isHorizontal()).toBe(true);
 });
 test('Creates a Battleship with a specified direction of vertical', () => {
   expect(battleshipV.isHorizontal()).toBe(false);
 });
+// hit
+test('A Battleship hit at position 4 throws an error since only positions 0-3 are valid', () => {
+  expect(() => {
+    battleshipH.hit(4);
+  }).toThrow('Integer provided to .hit() must be less than the length of the ship');
+});
+test('A Battleship hit at position 0 returns [0] as the hit position', () => {
+  expect(battleshipH.hit(0)).toEqual([0]);
+});
+test('A Battleship hit in 1/4 positions returns false with .isSunk()', () => {
+  expect(battleshipH.isSunk()).toBe(false);
+});
+
+test('A Battleship hit at positions 0, 1 returns [0, 1] as the hit positions', () => {
+  expect(battleshipH.hit(1)).toEqual([0, 1]);
+});
+test('A Battleship hit in 2/4 positions returns false with .isSunk()', () => {
+  expect(battleshipH.isSunk()).toBe(false);
+});
+
+test('A Battleship hit at positions 0, 1, 2 returns [0, 1, 2] as the hit positions', () => {
+  expect(battleshipH.hit(2)).toEqual([0, 1, 2]);
+});
+test('A Battleship hit in 3/4 positions returns false with .isSunk()', () => {
+  expect(battleshipH.isSunk()).toBe(false);
+});
+
+test('A Battleship hit at positions 0, 1, 2, 3 returns [0, 1, 2, 3] as the hit positions', () => {
+  expect(battleshipH.hit(3)).toEqual([0, 1, 2, 3]);
+});
+test('A Battleship hit in 4/4 positions returns false with .isSunk()', () => {
+  expect(battleshipH.isSunk()).toBe(true);
+});
+
+test('A Battleship that is already sunk cannot accept more hits', () => {
+  expect(() => {
+    battleshipH.hit(4)
+  }).toThrow('This ship is already sunk');
+});
+
 // Cruisers
 test('Creates a Cruiser with a length of 3', () => {
   expect(cruiserH.getLength()).toBe(3);
