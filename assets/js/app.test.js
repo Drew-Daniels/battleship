@@ -180,35 +180,78 @@ test('A Battleship that is already sunk cannot accept more hits', () => {
 });
 
 // Cruisers
+// length
 test('Creates a Cruiser with a length of 3', () => {
   expect(cruiserH.getLength()).toBe(3);
 });
+// direction
 test('Creates a Cruiser with a default direction of horizontal', () => {
   expect(cruiserH.isHorizontal()).toBe(true);
 });
 test('Creates a Cruiser with a specified direction of vertical', () => {
   expect(cruiserV.isHorizontal()).toBe(false);
 });
+// hit
+test('A Cruiser hit at position 3 throws an error since only positions 0-2 are valid', () => {
+  expect(() => {
+    cruiserH.hit(3);
+  }).toThrow('Integer provided to .hit() must be less than the length of the ship');
+});
+test('A Cruiser hit at position 0 returns [0] as the hit position', () => {
+  expect(cruiserH.hit(0)).toEqual([0]);
+});
+test('A Cruiser hit in 1/3 positions returns false with .isSunk()', () => {
+  expect(cruiserH.isSunk()).toBe(false);
+});
+
+test('A Cruiser hit at positions 0, 1 returns [0, 1] as the hit positions', () => {
+  expect(cruiserH.hit(1)).toEqual([0, 1]);
+});
+test('A Cruiser hit in 2/3 positions returns false with .isSunk()', () => {
+  expect(cruiserH.isSunk()).toBe(false);
+});
+
+test('A Cruiser hit at positions 0, 1, 2 returns [0, 1, 2] as the hit positions', () => {
+  expect(cruiserH.hit(2)).toEqual([0, 1, 2]);
+});
+test('A Cruiser hit in 3/3 positions returns false with .isSunk()', () => {
+  expect(cruiserH.isSunk()).toBe(true);
+});
+
+test('A Cruiser that is already sunk cannot accept more hits', () => {
+  expect(() => {
+    cruiserH.hit(2)
+  }).toThrow('This ship is already sunk');
+});
+
 // Submarines
+// length
 test('Creates a Submarine with a length of 3', () => {
   expect(submarineH.getLength()).toBe(3);
 });
+// direction
 test('Creates a Submarine with a default direction of horizontal', () => {
   expect(submarineH.isHorizontal()).toBe(true);
 });
 test('Creates a Submarine with a specified direction of vertical', () => {
   expect(submarineV.isHorizontal()).toBe(false);
 });
+// hit
+
 // Destroyers
+// length
 test('Creates a Destroyer with a length of 2', () => {
   expect(destroyerH.getLength()).toBe(2);
 });
+// direction
 test('Creates a Destroyer with a default direction of horizontal', () => {
   expect(destroyerH.isHorizontal()).toBe(true);
 });
 test('Creates a Destroyer with a specified direction of vertical', () => {
   expect(destroyerV.isHorizontal()).toBe(false);
 });
+// hit
+
 
 // PLAYER tests
 test('Human player object returns correct type', () => {
