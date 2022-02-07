@@ -13,7 +13,7 @@ let battleshipV;
 let cruiserH;
 let cruiserV;
 
-// Submarines - Length of 3
+// Destroyers - Length of 3
 let submarineH;
 let submarineV;
 
@@ -169,7 +169,7 @@ test('A Battleship hit in 3/4 positions returns false with .isSunk()', () => {
 test('A Battleship hit at positions 0, 1, 2, 3 returns [0, 1, 2, 3] as the hit positions', () => {
   expect(battleshipH.hit(3)).toEqual([0, 1, 2, 3]);
 });
-test('A Battleship hit in 4/4 positions returns false with .isSunk()', () => {
+test('A Battleship hit in 4/4 positions returns true with .isSunk()', () => {
   expect(battleshipH.isSunk()).toBe(true);
 });
 
@@ -214,7 +214,7 @@ test('A Cruiser hit in 2/3 positions returns false with .isSunk()', () => {
 test('A Cruiser hit at positions 0, 1, 2 returns [0, 1, 2] as the hit positions', () => {
   expect(cruiserH.hit(2)).toEqual([0, 1, 2]);
 });
-test('A Cruiser hit in 3/3 positions returns false with .isSunk()', () => {
+test('A Cruiser hit in 3/3 positions returns true with .isSunk()', () => {
   expect(cruiserH.isSunk()).toBe(true);
 });
 
@@ -224,46 +224,46 @@ test('A Cruiser that is already sunk cannot accept more hits', () => {
   }).toThrow('This ship is already sunk');
 });
 
-// Submarines
+// Destroyers
 // length
-test('Creates a Submarine with a length of 3', () => {
+test('Creates a Destroyer with a length of 3', () => {
   expect(submarineH.getLength()).toBe(3);
 });
 // direction
-test('Creates a Submarine with a default direction of horizontal', () => {
+test('Creates a Destroyer with a default direction of horizontal', () => {
   expect(submarineH.isHorizontal()).toBe(true);
 });
-test('Creates a Submarine with a specified direction of vertical', () => {
+test('Creates a Destroyer with a specified direction of vertical', () => {
   expect(submarineV.isHorizontal()).toBe(false);
 });
 // hit
-test('A Submarine hit at position 3 throws an error since only positions 0-2 are valid', () => {
+test('A Destroyer hit at position 3 throws an error since only positions 0-2 are valid', () => {
   expect(() => {
     submarineH.hit(3);
   }).toThrow('Integer provided to .hit() must be less than the length of the ship');
 });
-test('A Submarine hit at position 0 returns [0] as the hit position', () => {
+test('A Destroyer hit at position 0 returns [0] as the hit position', () => {
   expect(submarineH.hit(0)).toEqual([0]);
 });
-test('A Submarine hit in 1/3 positions returns false with .isSunk()', () => {
+test('A Destroyer hit in 1/3 positions returns false with .isSunk()', () => {
   expect(submarineH.isSunk()).toBe(false);
 });
 
-test('A Submarine hit at positions 0, 1 returns [0, 1] as the hit positions', () => {
+test('A Destroyer hit at positions 0, 1 returns [0, 1] as the hit positions', () => {
   expect(submarineH.hit(1)).toEqual([0, 1]);
 });
-test('A Submarine hit in 2/3 positions returns false with .isSunk()', () => {
+test('A Destroyer hit in 2/3 positions returns false with .isSunk()', () => {
   expect(submarineH.isSunk()).toBe(false);
 });
 
-test('A Submarine hit at positions 0, 1, 2 returns [0, 1, 2] as the hit positions', () => {
+test('A Destroyer hit at positions 0, 1, 2 returns [0, 1, 2] as the hit positions', () => {
   expect(submarineH.hit(2)).toEqual([0, 1, 2]);
 });
-test('A Submarine hit in 3/3 positions returns false with .isSunk()', () => {
+test('A Destroyer hit in 3/3 positions returns true with .isSunk()', () => {
   expect(submarineH.isSunk()).toBe(true);
 });
 
-test('A Submarine that is already sunk cannot accept more hits', () => {
+test('A Destroyer that is already sunk cannot accept more hits', () => {
   expect(() => {
     submarineH.hit(2)
   }).toThrow('This ship is already sunk');
@@ -282,7 +282,30 @@ test('Creates a Destroyer with a specified direction of vertical', () => {
   expect(destroyerV.isHorizontal()).toBe(false);
 });
 // hit
+test('A Destroyer hit at position 2 throws an error since only positions 0-1 are valid', () => {
+  expect(() => {
+    destroyerH.hit(2);
+  }).toThrow('Integer provided to .hit() must be less than the length of the ship');
+});
+test('A Destroyer hit at position 0 returns [0] as the hit position', () => {
+  expect(destroyerH.hit(0)).toEqual([0]);
+});
+test('A Destroyer hit in 1/2 positions returns false with .isSunk()', () => {
+  expect(destroyerH.isSunk()).toBe(false);
+});
 
+test('A Destroyer hit at positions 0, 1 returns [0, 1] as the hit positions', () => {
+  expect(destroyerH.hit(1)).toEqual([0, 1]);
+});
+test('A Destroyer hit in 2/2 positions returns true with .isSunk()', () => {
+  expect(destroyerH.isSunk()).toBe(true);
+});
+
+test('A Destroyer that is already sunk cannot accept more hits', () => {
+  expect(() => {
+    destroyerH.hit(2)
+  }).toThrow('This ship is already sunk');
+});
 
 // PLAYER tests
 test('Human player object returns correct type', () => {
