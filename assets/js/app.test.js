@@ -339,32 +339,71 @@ describe('Player tests', () => {
 });
 
 describe('Gameboard tests', () => {
+  let gameboardH;
+  let gameboardV;
   beforeAll(() => {
-    gameboardHuman.placeShip(0,0, destroyerH);
+    gameboardH = Gameboard();
+    gameboardV = Gameboard();
   });
-  describe('Placing destroyer horizontally at R0C0 creates object references at R0C0 and R0C1', () => {
-    describe('Ship Types', () => {
-      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
-        expect(gameboardHuman.getBoard()[0][0][0].shipType).toBe('destroyer');
+  describe('Horizontal placement', () => {
+    beforeAll(() => {
+      gameboardH.placeShip(0,0, destroyerH);
+    });
+    describe('Placing destroyer horizontally at R0C0 creates object references at R0C0 and R0C1', () => {
+      describe('Ship Types', () => {
+        test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+          expect(gameboardH.getBoard()[0][0][0].shipType).toBe('destroyer');
+        });
+        test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
+          expect(gameboardH.getBoard()[0][1][0].shipType).toBe('destroyer');
+        });
       });
-      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
-        expect(gameboardHuman.getBoard()[0][1][0].shipType).toBe('destroyer');
+      describe('Ship Positions', () => {
+        test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+          expect(gameboardH.getBoard()[0][0][0].shipPosition).toBe(0);
+        });
+        test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
+          expect(gameboardH.getBoard()[0][1][0].shipPosition).toBe(1);
+        });
+      });
+      describe('Is Hit', () => {
+        test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+          expect(gameboardH.getBoard()[0][0][0].isHit).toBe(false);
+        });
+        test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
+          expect(gameboardH.getBoard()[0][1][0].isHit).toBe(false);
+        });
       });
     });
-    describe('Ship Positions', () => {
-      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
-        expect(gameboardHuman.getBoard()[0][0][0].shipPosition).toBe(0);
-      });
-      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
-        expect(gameboardHuman.getBoard()[0][1][0].shipPosition).toBe(1);
-      });
+  });
+  describe('Vertical placement', () => {
+    beforeAll(() => {
+      gameboardV.placeShip(0,0, destroyerV);
     });
-    describe('Is Hit', () => {
-      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
-        expect(gameboardHuman.getBoard()[0][0][0].isHit).toBe(false);
+    describe('Placing destroyer horizontally at R0C0 creates object references at R0C0 and R1C0', () => {
+      describe('Ship Types', () => {
+        test('Vertical destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+          expect(gameboardV.getBoard()[0][0][0].shipType).toBe('destroyer');
+        });
+        test('Vertical destroyer placed at coordinates R0C0 has object reference in R1C0', () => {
+          expect(gameboardV.getBoard()[1][0][0].shipType).toBe('destroyer');
+        });
       });
-      test('Horizontal destroyer placed at coordinates R0C0 has object reference in R0C1', () => {
-        expect(gameboardHuman.getBoard()[0][1][0].isHit).toBe(false);
+      describe('Ship Positions', () => {
+        test('Vertical destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+          expect(gameboardV.getBoard()[0][0][0].shipPosition).toBe(0);
+        });
+        test('Vertical destroyer placed at coordinates R0C0 has object reference in R1C0', () => {
+          expect(gameboardV.getBoard()[1][0][0].shipPosition).toBe(1);
+        });
+      });
+      describe('Is Hit', () => {
+        test('Vertical destroyer placed at coordinates R0C0 has object reference in R0C0', () => {
+          expect(gameboardV.getBoard()[0][0][0].isHit).toBe(false);
+        });
+        test('Vertical destroyer placed at coordinates R0C0 has object reference in R1C0', () => {
+          expect(gameboardV.getBoard()[1][0][0].isHit).toBe(false);
+        });
       });
     });
   });
