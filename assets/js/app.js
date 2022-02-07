@@ -4,12 +4,12 @@
  * @param {string} direction Horizontal or vertical
  * @returns Ship
  */
-const Ship = (type, direction='horizontal') => {
-  
+const Ship = (type, horizontal=true) => {
+
   let sunk = false;
 
   const getType = () => type;
-  const getDirection = () => direction;
+  const isHorizontal = () => horizontal;
   let length;
   switch (type) {
     case 'carrier':
@@ -18,7 +18,10 @@ const Ship = (type, direction='horizontal') => {
     case 'battleship':
       length = 4;
       break;
-    case 'cruiser' || 'submarine':
+    case 'cruiser':
+      length = 3;
+      break;
+    case 'submarine':
       length = 3;
       break;
     case 'destroyer':
@@ -27,18 +30,21 @@ const Ship = (type, direction='horizontal') => {
   }
 
   const getLength = () => length;
-  const setAnchor = (coordinates) => {
-    const startPosition = coordinates;
-    if (direction === 'horizontal') {
+  const ctHits = () => {
+    let ct = 0;
 
-    } else {
-
-    }
   }
+  const checkIfSunk = () => {
+    // ct number of hits
 
+    // test if number of hits is equal to length
+  }
   const positions = Array.from(Array(length));
   const hit = (hitLoc) => {
+    // Mark this position as hit
     positions[hitLoc]['x'];
+    // Update 'sunk' value if all positions are hit
+
   }
 
   /**
@@ -48,14 +54,14 @@ const Ship = (type, direction='horizontal') => {
 
   return {
     getType, 
-    getDirection, 
+    isHorizontal, 
     getLength,
     hit,
     isSunk,
   }
 }
 
-const Gameboard = () => {
+const Gameboard = (human=true) => {
   const board = [
     // row 1
     [
@@ -104,10 +110,11 @@ const Gameboard = () => {
   };
 }
 
-const Player = (type) => {
-  const getType = () => type;
-
-  return {getType};
+const Player = (human=true) => {
+  const isHuman = () => human;
+  return {
+    isHuman,
+  };
 }
 
 module.exports = {
