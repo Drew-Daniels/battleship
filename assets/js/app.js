@@ -167,6 +167,35 @@ const Gameboard = (human=true) => {
   }
 
   /**
+   * Takes a pair of gameboard coordinates and checks whether these and any additional implied
+   * ship coordinates (ones that will be activated based on the length of the ship) are
+   * within the bounds of the board and do not already contain a ship
+   * @param {int} startRow 
+   * @param {int} startCol 
+   * @param {Ship object} ship 
+   */
+  const validCoordinates = (startRow, startCol, ship) => {
+    const isHorizontal = ship.isHorizontal();
+    const shipLength = ship.getLength();
+    let row;
+    let col;
+    let isValid = true;
+    for (let i=0; i <= shipLength-1; i++) {
+      if (isHorizontal) {
+        row = startRow;
+        col = startCol + i;
+      } else {
+        row = startRow + i;
+        col = startCol;
+      };
+      if (outOfBounds(row, col) || containsShip(row, col)) {
+        isValid = false;  
+      };
+      return isValid;
+    }
+  }
+
+  /**
    * Takes a pair of coordinates, and marks those coordinates as containing a ship
    * @param {int} startRow 
    * @param {int} startCol 
@@ -176,41 +205,25 @@ const Gameboard = (human=true) => {
   const placeShip = (startRow, startCol, ship) => {
     const isHorizontal = ship.isHorizontal();
     const shipLength = ship.getLength();
-    // Before making any changes to the board, first check that the coordinates that will be modified:
-    //  1.) Are within the bounds of the board
-    //  2.) Do not already contain a ship
-    let row;
-    let col;
-    for (let i=0; i <= shipLength-1; i++) {
-      if (isHorizontal) {
-        row = startRow;
-        col = startCol + i;
-      } else {
-        row = startRow + i;
-        col = startCol;
-      };
-      if (outOfBounds(row, col)) {
-        throw new Error('These coordinates are out of bounds');
-      } else if (containsShip(row, col)) {
-        throw new Error('These coordinates overlap with another ship');
-      };
-    };
-    for (let i=0; i <= shipLength-1; i++) {
-      if (isHorizontal) {
-        board[startRow][startCol+i][0] = {
+    if (validCoordinates(startRow, startCol, ship)) {
+      let row;
+      let col;
+      for (let i=0; i <= shipLength-1; i++) {
+        if (isHorizontal) {
+          row = startRow;
+          col = startCol + i;
+        } else {
+          row = startRow + i;
+          col = startCol;
+        }
+        board[row][col][0] = {
           shipType: ship.getType(),
           shipPosition: i,
           isHit: false,
-        }
-      } else {
-        board[startRow+i][startCol][0] = {
-          shipType: ship.getType(),
-          shipPosition: i,
-          isHit: false,
-        }
-      }
+        };
+      };
+      SHIPS.push(ship);
     }
-    SHIPS.push(ship);
     return board;
   }
 
