@@ -28,6 +28,8 @@ let playerAI;
 // Declare GAMEBOARDS
 let gameboardHuman;
 let gameboardAI;
+let gameboardH;
+let gameboardV;
 
 function initializeShips () {
   carrierH = Ship('carrier');
@@ -54,6 +56,8 @@ function initializePlayers() {
 function initializeGameboards() {
   gameboardHuman = Gameboard();
   gameboardAI = Gameboard(false);
+  gameboardH = Gameboard();
+  gameboardV = Gameboard();
 }
 
 function initializeAll() {
@@ -339,12 +343,6 @@ describe('Player tests', () => {
 });
 
 describe('Gameboard tests', () => {
-  let gameboardH;
-  let gameboardV;
-  beforeAll(() => {
-    gameboardH = Gameboard();
-    gameboardV = Gameboard();
-  });
   describe('Horizontal placement', () => {
     beforeAll(() => {
       gameboardH.placeShip(0,0, destroyerH);

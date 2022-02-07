@@ -136,6 +136,12 @@ const Gameboard = (human=true) => {
     return board;
   }
 
+  /**
+   * Takes a string description of the ship to return and returns that ship
+   * for this Gameboard object
+   * @param {string} shipType 
+   * @returns [Ship object]
+   */
   const getShip = (shipType) => {
     let res;
     SHIPS.forEach(function(ship) {
@@ -143,12 +149,11 @@ const Gameboard = (human=true) => {
         res = ship;
       }
     })
-
     return res;
   }
 
   /**
-   * Used to check if a pair of coordinates already contains a ship
+   * Used to check if a pair of coordinates already contains a ship reference
    * @param {int} row 
    * @param {int} col 
    * @returns
@@ -258,9 +263,13 @@ const Gameboard = (human=true) => {
     }
     return board;
   }
-
+  
+  /**
+   * Returns true if all ships are sunk, otherwise false
+   * @returns boolean
+   */
   const allShipsSunk = () => {
-
+    return SHIPS.every(ship => ship.isSunk());
   }
 
   return {
