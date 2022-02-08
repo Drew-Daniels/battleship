@@ -812,13 +812,119 @@ describe('Gameboard tests', () => {
     });
   });
   describe('Duplicate ship types', () => {
+    // first group of Ship objects
+    const carrier1 = Ship('carrier');
+    const battleship1 = Ship('battleship');
+    const cruiser1 = Ship('cruiser');
+    const submarine1 = Ship('submarine');
+    const destroyer1 = Ship('destroyer');
 
+    // second group of Ship objects
+    const carrier2 = Ship('carrier');
+    const battleship2 = Ship('battleship');
+    const cruiser2 = Ship('cruiser');
+    const submarine2 = Ship('submarine');
+    const destroyer2 = Ship('destroyer');
+
+    // create gameboard
+    const gameboardDuplicateTests = Gameboard();
+    // add first group of ships to Gameboard
+    gameboardDuplicateTests.placeShip(0, 0, carrier1);
+    gameboardDuplicateTests.placeShip(1, 0, battleship1);
+    gameboardDuplicateTests.placeShip(2, 0, cruiser1);
+    gameboardDuplicateTests.placeShip(3, 0, submarine1);
+    gameboardDuplicateTests.placeShip(4, 0, destroyer1);
+    
+    test('Attempting to place a 2nd carrier on a Gameboard throws an error', () => {
+      expect( () => {
+        gameboardDuplicateTests.placeShip(0, 0, carrier2);
+      }).toThrow('This gameboard already has that ship type');
+    });
+    test('Attempting to place a 2nd battleship on a Gameboard throws an error', () => {
+      expect( () => {
+        gameboardDuplicateTests.placeShip(1, 0, battleship2);
+      }).toThrow('This gameboard already has that ship type');
+    });
+    test('Attempting to place a 2nd cruiser on a Gameboard throws an error', () => {
+      expect( () => {
+        gameboardDuplicateTests.placeShip(2, 0, cruiser2);
+      }).toThrow('This gameboard already has that ship type');
+    });
+    test('Attempting to place a 2nd submarine on a Gameboard throws an error', () => {
+      expect( () => {
+        gameboardDuplicateTests.placeShip(3, 0, submarine2);
+      }).toThrow('This gameboard already has that ship type');
+    });
+    test('Attempting to place a 2nd destroyer on a Gameboard throws an error', () => {
+      expect( () => {
+        gameboardDuplicateTests.placeShip(4, 0, destroyer2);
+      }).toThrow('This gameboard already has that ship type');
+    });
   });
   describe('Overlap tests', () => {
+    // first group of Ship objects
+    const ship1 = Ship('carrier');
+    const ship2 = Ship('battleship');
+    const ship3 = Ship('battleship', false);
 
-  });
+    // create gameboard
+    const gameboardDuplicateTests = Gameboard();
+    // place first ship on board (should occupy R0C0 - R0C4)
+    gameboardDuplicateTests.placeShip(0, 0, ship1);
+    describe('Horizontal placement only', () => {
+      test('Attempting to place a ship with the same starting coordinates silently fails', () => {
+        gameboardDuplicateTests.placeShip(0, 0, ship2);
+        expect(gameboardDuplicateTests.ctShips()).toBe(1);
+      });
+      test('Attempting to place a ship that would overlap at at least one point with another silently fails', () => {
+        gameboardDuplicateTests.placeShip(0, 4, ship2);
+        expect(gameboardDuplicateTests.ctShips()).toBe(1);
+      });
+    });
+    describe('Horizontal and vertical placement', () => {
+      test('Attempting to place a ship with the same starting coordinates silently fails', () => {
+        gameboardDuplicateTests.placeShip(0, 0, ship3);
+        expect(gameboardDuplicateTests.ctShips()).toBe(1);
+      });
+      test('Attempting to place a ship that would overlap at at least one point with another silently fails', () => {
+        gameboardDuplicateTests.placeShip(0, 4, ship3);
+        expect(gameboardDuplicateTests.ctShips()).toBe(1);
+      });
+    })
+});
   describe('Out of Bounds tests', () => {
+    // carrier has length of 5 - so 5 is max col, row a horizontal, vertical resp. could be placed on the board
+    const outOfBoundsShip = Ship('carrier');
+    const outOfBoundsGameboard = Gameboard();
 
+    describe('Horizontal placement', () => {
+      test('A horizontal ship placed at a starting col of less than 0 silently fails', () => {
+        outOfBoundsGameboard.placeShip(0, -1, outOfBoundsShip);
+        expect(outOfBoundsGameboard.ctShips()).toBe(0);
+      });
+      test('A horizontal ship placed at a starting col of greater than 9 silently fails', () => {
+        outOfBoundsGameboard.placeShip(0, 10, outOfBoundsShip);
+        expect(outOfBoundsGameboard.ctShips()).toBe(0);
+      });
+      test('A horizontal ship placed at a starting col that would implicitly imply it go outside the board at some point silently fails', () => {
+        outOfBoundsGameboard.placeShip(0, 6, outOfBoundsShip);
+        expect(outOfBoundsGameboard.ctShips()).toBe(0);
+      });
+    });
+    describe('Vertical placement', () => {
+      test('A vertical ship placed at a starting row of less than 0 silently fails', () => {
+        outOfBoundsGameboard.placeShip(-1, 0, outOfBoundsShip);
+        expect(outOfBoundsGameboard.ctShips()).toBe(0);
+      });
+      test('A vertical ship placed at a starting row of greater than 9 silently fails', () => {
+        outOfBoundsGameboard.placeShip(10, 0, outOfBoundsShip);
+        expect(outOfBoundsGameboard.ctShips()).toBe(0);
+      });
+      test('A vertical ship placed at a starting row that would implicitly imply it go outside the board at some point silently fails', () => {
+        outOfBoundsGameboard.placeShip(6, 0, outOfBoundsShip);
+        expect(outOfBoundsGameboard.ctShips()).toBe(0);
+      })
+    });
   });
   describe('Gameboard.allShipsSunk()', () => {
 
@@ -835,7 +941,6 @@ describe('Gameboard tests', () => {
         ship.hit(i);
       };
     }
-
 
     test('Having 1 ship on the board and calling .allShipsSunk throws an error', () => {
       gameboardSinkTest.placeShip(0, 0, carrierToSink);

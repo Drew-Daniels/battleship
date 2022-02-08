@@ -128,7 +128,7 @@ const Gameboard = (human=true) => {
   ]
 
   const getBoardWidth = () => {
-    return BOARD.length;
+    return BOARD.length - 1;
   }
 
   const getBoard = () => {
@@ -168,7 +168,7 @@ const Gameboard = (human=true) => {
    */
   const outOfBounds = (row, col) => {
     const boardWidth = getBoardWidth();
-    return (row > boardWidth || col > boardWidth);
+    return (row < 0 || row > boardWidth || col < 0 || col > boardWidth);
   }
 
   /**
@@ -200,6 +200,19 @@ const Gameboard = (human=true) => {
     }
   }
 
+  const ctShips = () => {
+    return SHIPS.length;
+  }
+
+  const gameboardHasThisShip = (shipType) => {
+    let res = false;
+    SHIPS.forEach(function(SHIP) {
+      if (SHIP.getType() === shipType) {
+        res = true;
+      }
+    })
+    return res;
+  }
   /**
    * Takes a pair of coordinates, and marks those coordinates as containing a ship
    * @param {int} startRow 
@@ -208,6 +221,9 @@ const Gameboard = (human=true) => {
    * @returns BOARD
    */
   const placeShip = (startRow, startCol, ship) => {
+    if (gameboardHasThisShip(ship.getType())) {
+      throw new Error ('This gameboard already has that ship type');
+    }
     if (allShipsPlaced()) {
       throw new Error ('There are already 5 ships on this board')
     }
@@ -316,6 +332,7 @@ const Gameboard = (human=true) => {
     removeShip,
     receiveAttack,
     getBoard,
+    ctShips,
     allShipsSunk,
   };
 }
