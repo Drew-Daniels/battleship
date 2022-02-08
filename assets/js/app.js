@@ -196,12 +196,26 @@ const Gameboard = (human=true) => {
       if (outOfBounds(row, col) || containsShip(row, col)) {
         isValid = false;  
       };
-      return isValid;
     }
+    return isValid;
   }
 
   const ctShips = () => {
     return SHIPS.length;
+  }
+
+  const getMissCoordinates = () => {
+    // iterate rows first
+    const MISSES = [];
+    const boardWidth = getBoardWidth();
+    for (let rowNum=0; rowNum <= boardWidth; rowNum++) {
+      for (let colNum=0; colNum <= boardWidth; colNum++) {
+        if (BOARD[rowNum][colNum][0] === 'miss') {
+          MISSES.push([rowNum, colNum]);
+        }
+      }
+    }
+    return MISSES;
   }
 
   const gameboardHasThisShip = (shipType) => {

@@ -891,10 +891,11 @@ describe('Gameboard tests', () => {
         expect(gameboardDuplicateTests.ctShips()).toBe(1);
       });
     })
-});
+  });
   describe('Out of Bounds tests', () => {
     // carrier has length of 5 - so 5 is max col, row a horizontal, vertical resp. could be placed on the board
     const outOfBoundsShip = Ship('carrier');
+    const outOfBoundsShipV = Ship('carrier', false);
     const outOfBoundsGameboard = Gameboard();
 
     describe('Horizontal placement', () => {
@@ -906,7 +907,7 @@ describe('Gameboard tests', () => {
         outOfBoundsGameboard.placeShip(0, 10, outOfBoundsShip);
         expect(outOfBoundsGameboard.ctShips()).toBe(0);
       });
-      test('A horizontal ship placed at a starting col that would implicitly imply it go outside the board at some point silently fails', () => {
+      test('A horizontal ship placed at a starting col that would imply it go outside the board at some point silently fails', () => {
         outOfBoundsGameboard.placeShip(0, 6, outOfBoundsShip);
         expect(outOfBoundsGameboard.ctShips()).toBe(0);
       });
@@ -920,8 +921,8 @@ describe('Gameboard tests', () => {
         outOfBoundsGameboard.placeShip(10, 0, outOfBoundsShip);
         expect(outOfBoundsGameboard.ctShips()).toBe(0);
       });
-      test('A vertical ship placed at a starting row that would implicitly imply it go outside the board at some point silently fails', () => {
-        outOfBoundsGameboard.placeShip(6, 0, outOfBoundsShip);
+      test('A vertical ship placed at a starting row that would imply it go outside the board at some point silently fails', () => {
+        outOfBoundsGameboard.placeShip(6, 0, outOfBoundsShipV);
         expect(outOfBoundsGameboard.ctShips()).toBe(0);
       })
     });
