@@ -85,7 +85,7 @@ const Ship = (type, horizontal=true) => {
 const Gameboard = (human=true) => {
   const SHIPS = [];
   const MISSES = [];
-  const board = [
+  const BOARD = [
     // row 1
     [
       [], [], [], [], [], [], [], [], [], []
@@ -128,8 +128,12 @@ const Gameboard = (human=true) => {
     ],
   ]
 
+  const getBoardWidth = () => {
+    return BOARD.length;
+  }
+
   const getBoard = () => {
-    return board;
+    return BOARD;
   }
 
   /**
@@ -155,7 +159,7 @@ const Gameboard = (human=true) => {
    * @returns
    */
   const containsShip = (row, col) => {
-    return typeof board[row][col][0] === 'object';
+    return typeof BOARD[row][col][0] === 'object';
   }
   /**
    * Checks a pair of coordinates to see if they are within bounds of the gameboard
@@ -164,7 +168,8 @@ const Gameboard = (human=true) => {
    * @returns boolean
    */
   const outOfBounds = (row, col) => {
-    return (row > 9 || col > 9);
+    const boardWidth = getBoardWidth();
+    return (row > boardWidth || col > boardWidth);
   }
 
   /**
@@ -201,7 +206,7 @@ const Gameboard = (human=true) => {
    * @param {int} startRow 
    * @param {int} startCol 
    * @param {Ship object} ship 
-   * @returns 
+   * @returns BOARD
    */
   const placeShip = (startRow, startCol, ship) => {
     const isHorizontal = ship.isHorizontal();
@@ -217,7 +222,7 @@ const Gameboard = (human=true) => {
           row = startRow + i;
           col = startCol;
         }
-        board[row][col][0] = {
+        BOARD[row][col][0] = {
           shipType: ship.getType(),
           shipPosition: i,
           isHit: false,
@@ -225,7 +230,34 @@ const Gameboard = (human=true) => {
       };
       SHIPS.push(ship);
     }
-    return board;
+    return BOARD;
+  }
+
+  const removeShip = (startRow, startCol, ship) => {
+    const isHorizontal = ship.isHorizontal();
+    const shipLength = ship.getLength();
+    if (containsShip(startRow, startCol, ship)) {
+      let row;
+      let col;
+      for (let i=0; i <= shipLength-1; i++) {
+        if (isHorizontal) {
+          row = startRow;
+          col = startCol + i;
+        } else {
+          row = startRow + i;
+          col = startCol;
+        }
+        // remove the ship references from the Gameboard.BOARD array
+        BOARD[row][col].pop();
+      };
+      // remove the Ship object from the Gameboard.SHIPS array
+      for (let i=0; i < SHIPS.length; i++) {
+        if (SHIPS[i].getType() === ship.getType()) {
+          SHIPS.splice(i, 1);
+        }
+      }
+    }
+    return BOARD;
   }
 
   /**
@@ -236,11 +268,11 @@ const Gameboard = (human=true) => {
    * @param {int} col 
    */
   const receiveAttack = (row, col) => {
-    const item = board[row][col][0];
+    const item = BOARD[row][col][0];
     // if these coordinates contain an object, the object is that which contains the following properties:
     // {
     //  shipType: 'carrier' || 'battleship' || 'cruiser' || 'submarine' || 'destroyer'
-    //  shipPosition: integer from 0 to 4, depending on the length of the ship
+    //  shipPosition: 0 || 1 || 2 || 3 || 4
     //  isHit: true || false
     // }
     if (typeof item === 'object') {
@@ -252,12 +284,14 @@ const Gameboard = (human=true) => {
       ship.hit(hitPosition);
       item.isHit = true;
       // check if ship is sunk and do something
-
+      if (ship.isSunk()) {
+        // do something
+      }
     } else {
       // if no ship here, log the miss
-      board[row][col][0] = 'miss';
+      BOARD[row][col][0] = 'miss';
     }
-    return board;
+    return BOARD;
   }
   
   /**
@@ -270,6 +304,7 @@ const Gameboard = (human=true) => {
 
   return {
     placeShip,
+    removeShip,
     receiveAttack,
     getBoard,
   };
