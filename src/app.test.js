@@ -329,14 +329,18 @@ describe('Destroyer tests', () => {
 
 describe('Player tests', () => {
   describe('Human Player tests', () => {
+
     test('Human player object returns correct type', () => {
       expect(playerHuman.isHuman()).toBe(true);
     });
+
   });
   describe('AI Player tests', () => {
+
     test('AI player object returns correct type', () => {
       expect(playerAI.isHuman()).toBe(false);
     });
+    
   })
 });
 

@@ -7,7 +7,12 @@
 const Ship = (type, horizontal=true) => {
 
   const getType = () => type;
-  const isHorizontal = () => horizontal;
+  let hz = horizontal;
+  const isHorizontal = () => hz;
+  const toggleDirection = () => {
+    hz = !hz;
+    return hz;
+  }
   let length;
   switch (type) {
     case 'carrier':
