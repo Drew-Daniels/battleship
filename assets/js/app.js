@@ -84,7 +84,6 @@ const Ship = (type, horizontal=true) => {
  */
 const Gameboard = (human=true) => {
   const SHIPS = [];
-  const MISSES = [];
   const BOARD = [
     // row 1
     [
@@ -209,6 +208,9 @@ const Gameboard = (human=true) => {
    * @returns BOARD
    */
   const placeShip = (startRow, startCol, ship) => {
+    if (allShipsPlaced()) {
+      throw new Error ('There are already 5 ships on this board')
+    }
     const isHorizontal = ship.isHorizontal();
     const shipLength = ship.getLength();
     if (validCoordinates(startRow, startCol, ship)) {
@@ -294,11 +296,18 @@ const Gameboard = (human=true) => {
     return BOARD;
   }
   
+  const allShipsPlaced = () => {
+    return SHIPS.length === 5;
+  }
+
   /**
    * Returns true if all ships are sunk, otherwise false
    * @returns boolean
    */
   const allShipsSunk = () => {
+    if (!allShipsPlaced()) {
+      throw new Error('Not enough ships on the board!');
+    }
     return SHIPS.every(ship => ship.isSunk());
   }
 
@@ -307,6 +316,7 @@ const Gameboard = (human=true) => {
     removeShip,
     receiveAttack,
     getBoard,
+    allShipsSunk,
   };
 }
 

@@ -187,7 +187,6 @@ describe('Battleship tests', () => {
   });
 });
 
-// Cruisers
 describe('Cruiser tests', () => {
   describe('Length', () => {
     test('Creates a Cruiser with a length of 3', () => {
@@ -252,7 +251,6 @@ describe('Submarine tests', () => {
     });
   });
   describe('Hits', () => {
-    // hit
     test('A Submarine hit at position 3 throws an error since only positions 0-2 are valid', () => {
       expect(() => {
         submarineH.hit(3);
@@ -811,6 +809,61 @@ describe('Gameboard tests', () => {
       afterAll(() => {
         gameboardV.removeShip(0, 0, destroyerV);
       });
+    });
+  });
+  describe('Duplicate ship types', () => {
+
+  });
+  describe('Overlap tests', () => {
+
+  });
+  describe('Out of Bounds tests', () => {
+
+  });
+  describe('Gameboard.allShipsSunk()', () => {
+
+    const gameboardSinkTest = Gameboard();
+
+    const carrierToSink = Ship('carrier');
+    const battleshipToSink = Ship('battleship');
+    const cruiserToSink = Ship('cruiser');
+    const submarineToSink = Ship('submarine');
+    const destroyerToSink = Ship('destroyer');
+
+    function sink(ship) {
+      for (let i=0; i < ship.getLength(); i++) {
+        ship.hit(i);
+      };
+    }
+
+
+    test('Having 1 ship on the board and calling .allShipsSunk throws an error', () => {
+      gameboardSinkTest.placeShip(0, 0, carrierToSink);
+      expect(() => {
+        gameboardSinkTest.allShipsSunk()
+      }).toThrow('Not enough ships on the board!');
+    });
+    test('Having 2 ships on the board and calling .allShipsSunk throws an error', () => {
+      gameboardSinkTest.placeShip(1, 0, battleshipToSink);
+      expect(() => {
+        gameboardSinkTest.allShipsSunk()
+      }).toThrow('Not enough ships on the board!');
+    });
+    test('Having 3 ships on the board and calling .allShipsSunk throws an error', () => {
+      gameboardSinkTest.placeShip(2, 0, cruiserToSink);
+      expect(() => {
+        gameboardSinkTest.allShipsSunk()
+      }).toThrow('Not enough ships on the board!');
+    });
+    test('Having 4 ship on the board and calling .allShipsSunk throws an error', () => {
+      gameboardSinkTest.placeShip(3, 0, submarineToSink);
+      expect(() => {
+        gameboardSinkTest.allShipsSunk()
+      }).toThrow('Not enough ships on the board!');
+    });
+    test('Having 5 ships on the board and calling .allShipsSunk returns false unless they are all sunk', () => {
+      gameboardSinkTest.placeShip(4, 0, destroyerToSink);
+      expect(gameboardSinkTest.allShipsSunk()).toBe(false);
     });
   });
 });
