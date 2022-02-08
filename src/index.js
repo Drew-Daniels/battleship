@@ -22,7 +22,7 @@ function main() {
   const p2Destroyer = Ship('destroyer');
 
   // add event listeners, draw DOM elements etc.
-
+  console.log(p1.isHuman());
 }
 
 main();
