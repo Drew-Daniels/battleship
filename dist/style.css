@@ -52,6 +52,10 @@ table {
   border-spacing: 0;
 }
 
+* > {
+  box-sizing: border-box;
+}
+
 html, body {
   font-family: "Roboto", sans-serif;
 }
@@ -66,6 +70,9 @@ html, body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+.ui {
+  display: flex;
 }
 
 .header {
@@ -88,7 +95,7 @@ html, body {
 
 .gbs {
   display: flex;
-  flex-wrap: wrap;
+  flex-grow: 1;
   justify-content: space-around;
   align-items: center;
 }
@@ -98,15 +105,15 @@ html, body {
   flex-direction: column;
   align-items: center;
   flex-basis: 50%;
-  margin: 4em 0;
+  margin: 1em;
 }
 
 .gb-col-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3em;
-  width: 3em;
+  height: 2em;
+  width: 2em;
   border-radius: 4%;
   border: solid black 1px;
 }
@@ -115,27 +122,49 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3em;
-  width: 3em;
+  height: 2em;
+  width: 2em;
   border-radius: 4%;
   border: solid black 1px;
 }
-
 .gb-row {
   display: flex;
 }
-
 .gb-cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3em;
-  width: 3em;
+  height: 2em;
+  width: 2em;
   border: solid black 1px;
   border-radius: 4%;
   background: #89e2ee;
 }
-
+.gb-cell-human {
+  background: #89e2ee;
+}
+.gb-cell-ai {
+  background: gray;
+}
+.ship-area {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1em;
+}
+.ship-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1em 0;
+}
+.ship-cells {
+  display: flex;
+}
+.ship-cell {
+  width: 2em;
+  height: 2em;
+  border: solid black 1px;
+  background: gray;
+}
 .github-profile-container {
   display: flex;
   justify-content: center;
