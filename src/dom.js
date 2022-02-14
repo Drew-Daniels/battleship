@@ -32,12 +32,7 @@ function declassify(node, classesToRemove) {
 
 const toggleShipOrientation = (event) => {
   const shipNode = event.target.parentNode;
-  console.log(shipNode);
-  if (shipNode.classList.contains('vertical-ship')) {
-    declassify(shipNode, ['vertical-ship']);
-  } else {
-    classify(shipNode, ['vertical-ship']);
-  }
+  shipNode.classList.toggle('vertical-ship');
 }
 
 const addShipListeners = () => {

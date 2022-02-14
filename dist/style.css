@@ -73,6 +73,7 @@ html, body {
 }
 .ui {
   display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -148,7 +149,6 @@ html, body {
 }
 .ship-area {
   display: flex;
-  flex-direction: column;
   margin-left: 1em;
   padding: 1em;
   border-radius: 1em;
@@ -159,6 +159,8 @@ html, body {
 }
 .ship-container {
   display: flex;
+  height: 10em;
+  width: 15em;
   padding-bottom: 1em;
 }
 .ship-cells {
