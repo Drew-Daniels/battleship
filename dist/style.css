@@ -153,6 +153,7 @@ html, body {
 .ship-area {
   display: flex;
   margin-left: 1em;
+  margin-top: 1em;
   padding: 1em;
   border-radius: 1em;
   background: rgb(209, 208, 208);
@@ -160,9 +161,16 @@ html, body {
 .ship-area-header {
   margin-bottom: 1em;
 }
+.ship-containers {
+  display: flex;
+}
+.ship-container:first-child {
+  margin-left: 2em;
+}
 .ship-container {
   display: flex;
-  height: 15em;
+  flex-direction: column;
+  height: 12em;
   width: 15em;
   padding-bottom: 1em;
 }
@@ -171,6 +179,36 @@ html, body {
 }
 .vertical-ship {
   flex-direction: column;
+}
+.ship-cells.carrier.vertical-ship {
+  width: 2.1em;
+}
+.ship-cells.carrier {
+  width: calc(2.1*5em);
+}
+.ship-cells.battleship.vertical-ship {
+  width: 2.1em;
+}
+.ship-cells.battleship {
+  width: calc(2.1*4em);
+}
+.ship-cells.cruiser.vertical-ship {
+  width: 2.1em;
+}
+.ship-cells.cruiser {
+  width: calc(2.1*3em);
+}
+.ship-cells.submarine.vertical-ship {
+  width: 2.1em;
+}
+.ship-cells.submarine {
+  width: calc(2.1*3em);
+}
+.ship-cells.destroyer.vertical-ship {
+  width: 2.1em;
+}
+.ship-cells.destroyer {
+  width: calc(2.1*2em);
 }
 .ship-cell {
   width: 2em;
