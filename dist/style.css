@@ -149,7 +149,13 @@ html, body {
 .ship-area {
   display: flex;
   flex-direction: column;
-  padding-left: 1em;
+  margin-left: 1em;
+  padding: 1em;
+  border-radius: 1em;
+  background: rgb(209, 208, 208);
+}
+.ship-area-header {
+  margin-bottom: 1em;
 }
 .ship-container {
   display: flex;
@@ -162,6 +168,7 @@ html, body {
 .ship-cell {
   width: 2em;
   height: 2em;
+  border-radius: 4%;
   border: solid black 1px;
   background: gray;
 }
@@ -194,4 +201,6 @@ html, body {
 .gb-cell.ship {
   background: gray;
 }
-
+h1 {
+  font-size: 1.5em;
+}

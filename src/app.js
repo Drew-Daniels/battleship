@@ -76,7 +76,8 @@ const Ship = (type, horizontal=true) => {
 
   return {
     getType, 
-    isHorizontal, 
+    isHorizontal,
+    toggleDirection,
     getLength,
     hit,
     isSunk,
@@ -353,14 +354,74 @@ const Gameboard = (human=true) => {
     getBoard,
     ctShips,
     allShipsSunk,
+    containsShip,
   };
 }
 
 const Player = (human=true) => {
   const isHuman = () => human;
+  // create Gameboard
+  const gameboard = Gameboard(human);
+  const getGameboard = () => gameboard;
+  /**
+   * Creates a Player-specific ship
+   * @param {'carrier' || 'battleship' || 'cruiser' || 'submarine' || 'destroyer'} shipType 
+   * @param {boolean} isHorizontal 
+   * @returns [Ship object]
+   */
+  const createShip = (shipType, isHorizontal=true) => {
+    return Ship(shipType, isHorizontal);
+  }
+  /**
+   * Retrieves a Player's ship
+   * @param {'carrier' || 'battleship' || 'cruiser' || 'submarine' || 'destroyer'} shipType 
+   * @returns [Ship object]
+   */
+  const retrieveShip = (shipType) => {
+    let ship;
+    switch(shipType) {
+      case 'carrier':
+        ship = carrier;
+        break;
+      case 'battleship':
+        ship = battleship;
+        break;
+      case 'cruiser':
+        ship = cruiser;
+        break;
+      case 'submarine':
+        ship = submarine;
+        break;
+      case 'destroyer':
+        ship = destroyer;
+        break;
+    }
+    return ship;
+  }
+  /**
+   * Creates and places a ship on a Player's Gameboard at the specified coordinates and orientation
+   * @param {int} rowNum 
+   * @param {int} colNum 
+   * @param {'carrier' || 'battleship' || 'cruiser' || 'submarine' || 'destroyer'} shipType 
+   * @returns 
+   */
+  const deployShip = (rowNum, colNum, shipType, isHorizontal) => {
+    const ship = createShip(shipType, isHorizontal);
+    const board = gameboard.placeShip(rowNum, colNum, ship);
+  }
+  const toggleShipOrientation = (shipType) => {
+    const ship = retrieveShip(shipType);
+    const isHorizontal = ship.toggleDirection();
+    return isHorizontal;
+  }
 
   return {
     isHuman,
+    createShip,
+    retrieveShip,
+    deployShip,
+    toggleShipOrientation,
+    getGameboard,
   };
 }
 
