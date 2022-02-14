@@ -159,8 +159,7 @@ html, body {
 }
 .ship-container {
   display: flex;
-  flex-direction: column;
-  padding: 1em 0;
+  padding-bottom: 1em;
 }
 .ship-cells {
   display: flex;
