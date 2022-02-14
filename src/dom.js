@@ -1,3 +1,53 @@
+function getClasses(element) {
+  const classList = element.className.split(' ');
+  return classList;
+}
+/**
+ * Adds all classes in an array to a DOM node
+ * @param {DOM Node} node 
+ * @param {array} classes 
+ * @returns DOM Node
+ */
+function classify(node, classes) {
+  if (classes.length !== 0) {
+    node.classList.add(...classes);
+  }
+  return node;
+}
+
+/**
+ * Removes all classes in an array from a DOM node
+ * @param {DOM Node} node
+ * @param {array} classesToRemove 
+ * @returns DOM Node
+ */
+function declassify(node, classesToRemove) {
+  if (classesToRemove.length !== 0) {
+    for (let i=0; i < classesToRemove.length; i++) {
+      node.classList.remove(classesToRemove[i]);
+    }
+  }
+  return node;
+}
+
+const toggleShipOrientation = (event) => {
+  const shipNode = event.target.parentNode;
+  console.log(shipNode);
+  if (shipNode.classList.contains('vertical-ship')) {
+    declassify(shipNode, ['vertical-ship']);
+  } else {
+    classify(shipNode, ['vertical-ship']);
+  }
+}
+
+const addShipListeners = () => {
+  const ships = document.querySelectorAll('.ship-cells');
+  ships.forEach(function(ship) {
+    console.log(ship);
+    ship.addEventListener('click', toggleShipOrientation);
+  })
+}
+
 const styleGameboard = (gameboardObj, human) => {
   const gameboard = gameboardObj.getBoard();
   const gameboardDOMBoards = document.querySelectorAll('.gb');
@@ -20,6 +70,11 @@ const styleGameboard = (gameboardObj, human) => {
   }
 }
 
+const setup = () => {
+  addShipListeners();
+}
+
 export default {
+  setup,
   styleGameboard,
 }

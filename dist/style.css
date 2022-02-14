@@ -164,6 +164,9 @@ html, body {
 .ship-cells {
   display: flex;
 }
+.vertical-ship {
+  flex-direction: column;
+}
 .ship-cell {
   width: 2em;
   height: 2em;

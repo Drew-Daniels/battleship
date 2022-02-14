@@ -27,7 +27,10 @@ function main() {
   const p1Gameboard = p1.getGameboard();
   const p2Gameboard = p2.getGameboard();
 
+  DOM.setup();
+  
   DOM.styleGameboard(p1Gameboard, true)
+
 
 }
 
