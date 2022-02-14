@@ -108,6 +108,9 @@ html, body {
   flex-basis: 50%;
   margin: 1em;
 }
+.player-icon {
+  height: 4em;
+}
 
 .gb-col-header {
   display: flex;
@@ -159,7 +162,7 @@ html, body {
 }
 .ship-container {
   display: flex;
-  height: 10em;
+  height: 15em;
   width: 15em;
   padding-bottom: 1em;
 }
