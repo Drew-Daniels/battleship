@@ -38,7 +38,6 @@ const toggleShipOrientation = (event) => {
 const addShipListeners = () => {
   const ships = document.querySelectorAll('.ship-cells');
   ships.forEach(function(ship) {
-    console.log(ship);
     ship.addEventListener('click', toggleShipOrientation);
   })
 }
@@ -59,7 +58,7 @@ const styleGameboard = (gameboardObj, human) => {
         // increment row num by one because first row is headers
         const gameboardDOMRow = gameboardDOM.querySelectorAll('.gb-row')[rowNum+1];
         const gameboardDOMCell = gameboardDOM.querySelectorAll('.gb-row')[rowNum+1].querySelectorAll('.gb-cell')[colNum];
-        gameboardDOMCell.innerText = 'spam';
+        gameboardDOMCell.classList.add('gb-cell-ship');
       }
     }
   }

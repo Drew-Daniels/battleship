@@ -373,32 +373,6 @@ const Player = (human=true) => {
     return Ship(shipType, isHorizontal);
   }
   /**
-   * Retrieves a Player's ship
-   * @param {'carrier' || 'battleship' || 'cruiser' || 'submarine' || 'destroyer'} shipType 
-   * @returns [Ship object]
-   */
-  const retrieveShip = (shipType) => {
-    let ship;
-    switch(shipType) {
-      case 'carrier':
-        ship = carrier;
-        break;
-      case 'battleship':
-        ship = battleship;
-        break;
-      case 'cruiser':
-        ship = cruiser;
-        break;
-      case 'submarine':
-        ship = submarine;
-        break;
-      case 'destroyer':
-        ship = destroyer;
-        break;
-    }
-    return ship;
-  }
-  /**
    * Creates and places a ship on a Player's Gameboard at the specified coordinates and orientation
    * @param {int} rowNum 
    * @param {int} colNum 
@@ -409,18 +383,16 @@ const Player = (human=true) => {
     const ship = createShip(shipType, isHorizontal);
     const board = gameboard.placeShip(rowNum, colNum, ship);
   }
-  const toggleShipOrientation = (shipType) => {
-    const ship = retrieveShip(shipType);
-    const isHorizontal = ship.toggleDirection();
-    return isHorizontal;
+
+  const sendAttack = (rowNum, colNum, gb) => {
+    const board = gb.receiveAttack(rowNum, colNum);
+    return board;
   }
 
   return {
     isHuman,
     createShip,
-    retrieveShip,
     deployShip,
-    toggleShipOrientation,
     getGameboard,
   };
 }

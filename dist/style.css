@@ -110,6 +110,7 @@ html, body {
 }
 .player-icon {
   height: 4em;
+  margin-bottom: 1em;
 }
 
 .gb-col-header {
@@ -146,6 +147,9 @@ html, body {
 }
 .gb-cell-human {
   background: #89e2ee;
+}
+.gb-cell-human.gb-cell-ship {
+  background: gray;
 }
 .gb-cell-ai {
   background: gray;
