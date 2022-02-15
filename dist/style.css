@@ -250,6 +250,12 @@ html, body {
 .gb-cell.ship {
   background: gray;
 }
+.shadow {
+  background: black;
+}
+.hide {
+  display: none;
+}
 h1 {
   font-size: 1.5em;
 }

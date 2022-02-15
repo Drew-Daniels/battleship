@@ -210,19 +210,6 @@ const Gameboard = (human=true) => {
     return SHIPS.length;
   }
 
-  const getMissCoordinates = () => {
-    const MISSES = [];
-    const boardWidth = getBoardWidth();
-    for (let rowNum=0; rowNum <= boardWidth; rowNum++) {
-      for (let colNum=0; colNum <= boardWidth; colNum++) {
-        if (BOARD[rowNum][colNum][0] === 'miss') {
-          MISSES.push([rowNum, colNum]);
-        }
-      }
-    }
-    return MISSES;
-  }
-
   const gameboardHasThisShip = (shipType) => {
     let res = false;
     SHIPS.forEach(function(SHIP) {
@@ -352,6 +339,7 @@ const Gameboard = (human=true) => {
     receiveAttack,
     getBoard,
     ctShips,
+    allShipsPlaced,
     allShipsSunk,
     containsShip,
   };
