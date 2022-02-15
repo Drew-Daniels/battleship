@@ -1,22 +1,55 @@
 import { Player } from './app';
 import DOM from './dom';
 
-const getAttackInfo = (e) => {
-  const row = e.target.parentNode.firstElementChild.innerText;
-  // const col = ;
-  // const gb = ;
-  console.log(row);
-}
-
-
-const addGameboardListeners = () => {
-  const gbCells = document.querySelectorAll('.gb-cell-ai')
-  gbCells.forEach(function(gbCell) {
-    gbCell.addEventListener('click', getAttackInfo)
-  })
-}
+const aiAttemptedCoord = [];
+const humAttemptedCoord = [];
 
 function main() {
+
+  const getAttackInfo = (e) => {
+    const id = e.target.id;
+    const rowAndCol = id.match(/[0-9]{2}/);
+    
+    const row = parseInt(rowAndCol[0][0]);
+    const col = parseInt(rowAndCol[0][1]);
+    return [row, col];
+  }
+  
+  const getRandIntFromInterval = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  const getRandAttackCoord = () => {
+    let randRowNum;
+    let randColNum;
+    // ensures that the coordinates send are not ones that have already been tried
+    // build in a step that will prevent an infinite loop from occurring if all possible occurences have been tried?
+    do {
+      randRowNum = getRandIntFromInterval(0, 9);
+      randColNum = getRandIntFromInterval(0, 9);
+    } while (aiAttemptedCoord.includes([randRowNum, randColNum]));
+    return [randRowNum, randColNum];
+  }
+
+  const processAttack = (e) => {
+    // HUMAN moves first
+    let [aiRow, aiCol] = [...getAttackInfo(e)];
+    const aiBoard = p1.sendAttack(aiRow, aiCol, p2Gameboard);
+    // do something with the board here - probably apply classes that indicate whether or not a ship has been hit or if this was a miss
+    DOM.updateGameboard(aiBoard, false);
+    // AI Moves second
+    // have robot make randomized move here
+    const [humRow, humCol] = [...getRandAttackCoord()];
+    const humanBoard = p2.sendAttack(humRow, humCol, p1Gameboard);
+    DOM.updateGameboard(humanBoard, true);
+  }
+  
+  const addGameboardListeners = () => {
+    const gbCells = document.querySelectorAll('.gb-cell-ai')
+    gbCells.forEach(function(gbCell) {
+      gbCell.addEventListener('click', processAttack)
+    })
+  }
 
   // create Player objects (Gameboard objects now created as part of the players)
   const p1 = Player();

@@ -211,7 +211,6 @@ const Gameboard = (human=true) => {
   }
 
   const getMissCoordinates = () => {
-    // iterate rows first
     const MISSES = [];
     const boardWidth = getBoardWidth();
     for (let rowNum=0; rowNum <= boardWidth; rowNum++) {
@@ -394,6 +393,7 @@ const Player = (human=true) => {
     createShip,
     deployShip,
     getGameboard,
+    sendAttack,
   };
 }
 

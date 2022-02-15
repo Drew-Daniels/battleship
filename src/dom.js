@@ -1,3 +1,6 @@
+const aiGameboardRowStr = '.gb-ai > .gb-row > #gb-ai-';
+const humanGameboardRowStr = '.gb-human > .gb-row > #gb-human-';
+
 function getClasses(element) {
   const classList = element.className.split(' ');
   return classList;
@@ -64,6 +67,36 @@ const styleGameboard = (gameboardObj, human) => {
   }
 }
 
+/**
+ * Takes a gameboard Object's board, loops through all the rows and columns to check if the contents of those cells are an object or a miss
+ * If an object, the board will check if the ship position is hit and style appropriately
+ * If the contents are a 'miss', then the appropriate style for misses will be applied
+ * TODO: Depending on how long this process takes - it might better to have the .receiveAttack method instead send the results of the attack rather than the entire board
+ * However, this would require redesigning the tests in place
+ * If this were done instead, no looping would have to be done and the appropriate cell on the board could immediately be styled
+ * @param {*} gameboard 
+ * @param {*} isHuman 
+ */
+const updateGameboard = (gameboard, isHuman=false) => {
+  let contents;
+  let DOMGameboardRowStr = (isHuman) ? humanGameboardRowStr: aiGameboardRowStr;
+  for (let rowNum=0; rowNum < gameboard.length; rowNum++) {
+    for (let colNum=0; colNum < gameboard.length; colNum++) {
+      contents = gameboard[rowNum][colNum][0];
+      let DOMCell;
+      DOMCell = document.querySelector(DOMGameboardRowStr+rowNum+colNum);
+      if (typeof contents === 'object') {
+        if (contents.isHit) {
+          //style for hit here
+          classify(DOMCell, ['hit']);
+        }
+      } else if (contents === 'miss') {
+          classify(DOMCell, ['miss']);
+      };
+    };
+  };
+}
+
 const setup = () => {
   addShipListeners();
 }
@@ -71,4 +104,5 @@ const setup = () => {
 export default {
   setup,
   styleGameboard,
+  updateGameboard,
 }
