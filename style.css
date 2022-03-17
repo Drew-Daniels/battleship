@@ -63,7 +63,8 @@ html, body {
 .content-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  background: linear-gradient(45deg, black, white)
 }
 
 .content {
@@ -107,6 +108,7 @@ html, body {
   align-items: center;
   flex-basis: 50%;
   margin: 1em;
+  color: rgb(172, 171, 171);
 }
 .player-icon {
   height: 4em;
@@ -120,7 +122,7 @@ html, body {
   height: 2em;
   width: 2em;
   border-radius: 4%;
-  border: solid black 1px;
+  border: solid rgb(172, 171, 171) 1px;
 }
 
 .gb-row-header {
@@ -130,7 +132,7 @@ html, body {
   height: 2em;
   width: 2em;
   border-radius: 4%;
-  border: solid black 1px;
+  border: solid rgb(172, 171, 171) 1px;
 }
 .gb-row {
   display: flex;
@@ -141,9 +143,9 @@ html, body {
   align-items: center;
   height: 2em;
   width: 2em;
-  border: solid black 1px;
+  border: solid rgb(172, 171, 171) 1px;
   border-radius: 4%;
-  background: #89e2ee;
+  transition: background-color .3s ease;
 }
 .gb-cell-human {
   background: #89e2ee;
@@ -156,27 +158,31 @@ html, body {
 }
 .ship-area {
   display: flex;
-  margin-left: 1em;
-  margin-top: 1em;
+  flex-direction: column;
+  /* margin: 1em; */
   padding: 1em;
   border-radius: 1em;
-  background: rgb(209, 208, 208);
+}
+.ship-area-text-container {
+  text-align: center;
 }
 .ship-area-header {
   margin-bottom: 1em;
 }
 .ship-containers {
   display: flex;
-}
-.ship-container:first-child {
-  margin-left: 2em;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .ship-container {
   display: flex;
   flex-direction: column;
-  height: 12em;
   width: 15em;
   padding-bottom: 1em;
+  margin: 1em;
+}
+.ship-container-header {
+  color: rgb(172, 171, 171);
 }
 .ship-cells {
   display: flex;
@@ -218,7 +224,7 @@ html, body {
   width: 2em;
   height: 2em;
   border-radius: 4%;
-  border: solid black 1px;
+  border: solid rgb(172, 171, 171) 1px;
   background: gray;
 }
 .github-profile-container {
@@ -232,10 +238,15 @@ html, body {
 
 .github-icon {
   height: 2em;
+  transition: transform .5s ease-in-out;
 }
-
+.github-icon:hover {
+  height: 2.5em;
+  transform: rotate(360deg);
+}
 .header-text {
   font-size: 4em;
+  font-weight: 700;
   text-align: center;
 }
 
@@ -251,11 +262,19 @@ html, body {
   background: gray;
 }
 .shadow {
-  background: black;
+  background: rgb(20, 137, 233);
 }
 .hide {
   display: none;
 }
 h1 {
   font-size: 1.5em;
+}
+.spin {
+  height: 5.5em;
+  animation: spin .4s linear infinite;
+}
+@keyframes spin {
+  0%  {-webkit-transform: rotate(0deg);}
+  100% {-webkit-transform: rotate(360deg);}   
 }
