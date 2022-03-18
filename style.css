@@ -58,13 +58,17 @@ table {
 
 html, body {
   font-family: "Roboto", sans-serif;
+  color: white;
 }
 
 .content-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  background: linear-gradient(45deg, black, white)
+  height: 100vh;
+  background-image: linear-gradient(45deg, black, white);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .content {
@@ -90,29 +94,22 @@ html, body {
   align-items: center;
   height: 5em;
 }
-
-.footer > * {
-  padding-bottom: 0.25em;
-}
-
 .gbs {
   display: flex;
-  flex-grow: 1;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .gb {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-basis: 50%;
+  flex-basis: 25%;
   margin: 1em;
-  color: rgb(172, 171, 171);
 }
 .player-icon {
-  height: 4em;
-  margin-bottom: 1em;
+  height: 1.75em;
 }
 
 .gb-col-header {
@@ -159,7 +156,6 @@ html, body {
 .ship-area {
   display: flex;
   flex-direction: column;
-  /* margin: 1em; */
   padding: 1em;
   border-radius: 1em;
 }
@@ -167,22 +163,24 @@ html, body {
   text-align: center;
 }
 .ship-area-header {
+  font-size: 1em;
+  margin: 1em;
+}
+.ship-container-header {
   margin-bottom: 1em;
 }
 .ship-containers {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  min-height: 15em;
+  flex-wrap: wrap;
 }
 .ship-container {
   display: flex;
   flex-direction: column;
-  width: 15em;
+  min-width: 10.5em;
   padding-bottom: 1em;
-  margin: 1em;
-}
-.ship-container-header {
-  color: rgb(172, 171, 171);
+  margin-right: 1em;
 }
 .ship-cells {
   display: flex;
@@ -230,6 +228,7 @@ html, body {
 .github-profile-container {
   display: flex;
   justify-content: center;
+  padding-bottom: 1em;
 }
 
 .github-profile-container > * {
@@ -277,4 +276,25 @@ h1 {
 @keyframes spin {
   0%  {-webkit-transform: rotate(0deg);}
   100% {-webkit-transform: rotate(360deg);}   
+}
+
+/* SMALL VIEWPORT RULES */
+@media (max-width: 500px) {
+  .header-text {
+    font-size: 1.5em;
+  }
+  .ship-area-header {
+    font-size: .75em;
+  }
+  .ship-container-header {
+    font-size: .75em;
+  }
+  .ship-cell, .gb-cell, .gb-row-header, .gb-col-header {
+    width: 1em;
+    height: 1em;
+    /* font-size: .5em; */
+  }
+  .player-icon {
+    width: 1em;
+  }
 }
