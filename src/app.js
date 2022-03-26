@@ -334,6 +334,7 @@ const Gameboard = (human=true) => {
   }
 
   return {
+    validCoordinates,
     placeShip,
     removeShip,
     receiveAttack,

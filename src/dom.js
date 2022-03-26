@@ -33,6 +33,14 @@ function declassify(node, classesToRemove) {
   return node;
 }
 
+function hide(node) {
+  node.classList.add('hide');
+}
+
+function unhide(node) {
+  node.classList.remove('hide');
+}
+
 const toggleShipOrientation = (event) => {
   const shipNode = event.target.parentNode;
   shipNode.classList.toggle('vertical-ship');
@@ -105,4 +113,6 @@ export default {
   setup,
   styleGameboard,
   updateGameboard,
+  hide,
+  unhide
 }

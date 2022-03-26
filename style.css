@@ -79,6 +79,7 @@ html, body {
 .ui {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .header {
@@ -99,6 +100,7 @@ html, body {
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
+  flex-grow: 1;
 }
 
 .gb {
@@ -264,7 +266,7 @@ html, body {
   background: rgb(20, 137, 233);
 }
 .hide {
-  display: none;
+  display: none !important;
 }
 h1 {
   font-size: 1.5em;
@@ -272,6 +274,16 @@ h1 {
 .spin {
   height: 5.5em;
   animation: spin .4s linear infinite;
+}
+.winner-banner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+.winner-banner-header {
+  font-size: 3em;
+  text-align: center;
 }
 @keyframes spin {
   0%  {-webkit-transform: rotate(0deg);}

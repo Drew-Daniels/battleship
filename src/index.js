@@ -20,6 +20,12 @@ function main() {
     return [row, col];
   }
   
+  /**
+   *
+   * @param {int} min 
+   * @param {int} max 
+   * @returns int between min and max inclusive at both ends
+   */
   const getRandIntFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
@@ -36,21 +42,38 @@ function main() {
     return [randRowNum, randColNum];
   }
 
+  const getRandShipCoordinates = (gb, ship) => {
+    let randRowNum;
+    let randColNum;
+    do {
+      randRowNum = getRandIntFromInterval(0, 9);
+      randColNum = getRandIntFromInterval(0, 9);
+    } while (!gb.validCoordinates(randRowNum, randColNum, ship));
+    return [randRowNum, randColNum];
+  }
+
   const processAttack = (e) => {
     // first check if all human ships are placed - if not do not process anything
     if (!p1Gameboard.allShipsPlaced()) {
       return;
     };
+    DOM.hide(document.querySelector('.ship-area'));
     // HUMAN moves first
     let [aiRow, aiCol] = [...getAttackInfo(e)];
     const aiBoard = p1.sendAttack(aiRow, aiCol, p2Gameboard);
-    // do something with the board here - probably apply classes that indicate whether or not a ship has been hit or if this was a miss
     DOM.updateGameboard(aiBoard, false);
+    if (p2Gameboard.allShipsSunk()) {
+      const winnerBannerHeader= document.querySelector('.winner-banner-header');
+      winnerBannerHeader.textContent = 'Player 1 has won!'
+    }
     // AI Moves second
-    // have robot make randomized move here
     const [humRow, humCol] = [...getRandAttackCoord()];
     const humanBoard = p2.sendAttack(humRow, humCol, p1Gameboard);
     DOM.updateGameboard(humanBoard, true);
+    if (p1Gameboard.allShipsSunk()) {
+      const winnerBannerHeader= document.querySelector('.winner-banner-header');
+      winnerBannerHeader.textContent = 'Player 2 has won!'
+    }
   }
   
   const addShipListeners = () => {
@@ -128,17 +151,35 @@ function main() {
     p1 = Player();
     p2 = Player(false);
 
-    // place p2 (computer) ships
-    p2.deployShip(0, 0, 'carrier');
-    p2.deployShip(1, 0, 'battleship');
-    p2.deployShip(2, 0, 'cruiser');
-    p2.deployShip(3, 0, 'submarine');
-    p2.deployShip(4, 0, 'destroyer');
-
     // use the gameboards to apply DOM styling
     // only human gamemboard will have visible styling - computer will just have classes but not look any different
     p1Gameboard = p1.getGameboard();
     p2Gameboard = p2.getGameboard();
+
+    const p2Carrier = p2.createShip('carrier', !!getRandIntFromInterval(0,1));
+    const p2Battleship = p2.createShip('battleship', !!getRandIntFromInterval(0,1));
+    const p2Cruiser = p2.createShip('cruiser', !!getRandIntFromInterval(0,1));
+    const p2Submarine = p2.createShip('submarine', !!getRandIntFromInterval(0,1));
+    const p2Destroyer = p2.createShip('destroyer', !!getRandIntFromInterval(0,1));
+
+    const p2CarrierCoordinates = getRandShipCoordinates(p2Gameboard, p2Carrier);
+    const p2BattleshipCoordinates = getRandShipCoordinates(p2Gameboard, p2Battleship);
+    const p2CruiserCoordinates = getRandShipCoordinates(p2Gameboard, p2Cruiser);
+    const p2SubmarineCoordinates = getRandShipCoordinates(p2Gameboard, p2Submarine);
+    const p2DestroyerCoordinates = getRandShipCoordinates(p2Gameboard, p2Destroyer);
+
+    p2Gameboard.placeShip(...p2CarrierCoordinates, p2Carrier);
+    p2Gameboard.placeShip(...p2BattleshipCoordinates, p2Battleship);
+    p2Gameboard.placeShip(...p2CruiserCoordinates, p2Cruiser);
+    p2Gameboard.placeShip(...p2SubmarineCoordinates, p2Submarine);
+    p2Gameboard.placeShip(...p2DestroyerCoordinates, p2Destroyer);
+
+    // place p2 (computer) ships
+    // p2.deployShip(0, 0, 'carrier');
+    // p2.deployShip(1, 0, 'battleship');
+    // p2.deployShip(2, 0, 'cruiser');
+    // p2.deployShip(3, 0, 'submarine');
+    // p2.deployShip(4, 0, 'destroyer');
 
     DOM.setup();
     addShipListeners();
