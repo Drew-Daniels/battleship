@@ -200,7 +200,8 @@ const Gameboard = (human=true) => {
         col = startCol;
       };
       if (outOfBounds(row, col) || containsShip(row, col)) {
-        isValid = false;  
+        isValid = false;
+        break;
       };
     }
     return isValid;
@@ -271,10 +272,8 @@ const Gameboard = (human=true) => {
           row = startRow + i;
           col = startCol;
         }
-        // remove the ship references from the Gameboard.BOARD array
         BOARD[row][col].pop();
       };
-      // remove the Ship object from the Gameboard.SHIPS array
       for (let i=0; i < SHIPS.length; i++) {
         if (SHIPS[i].getType() === ship.getType()) {
           SHIPS.splice(i, 1);
@@ -307,7 +306,6 @@ const Gameboard = (human=true) => {
       const hitPosition = item.shipPosition;
       ship.hit(hitPosition);
       item.isHit = true;
-      // check if ship is sunk and do something
       if (ship.isSunk()) {
         // do something
       }

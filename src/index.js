@@ -147,12 +147,10 @@ function main() {
   }
 
   function startup() {
-    // create Player objects (Gameboard objects now created as part of the players)
+
     p1 = Player();
     p2 = Player(false);
 
-    // use the gameboards to apply DOM styling
-    // only human gamemboard will have visible styling - computer will just have classes but not look any different
     p1Gameboard = p1.getGameboard();
     p2Gameboard = p2.getGameboard();
 
@@ -163,23 +161,19 @@ function main() {
     const p2Destroyer = p2.createShip('destroyer', !!getRandIntFromInterval(0,1));
 
     const p2CarrierCoordinates = getRandShipCoordinates(p2Gameboard, p2Carrier);
-    const p2BattleshipCoordinates = getRandShipCoordinates(p2Gameboard, p2Battleship);
-    const p2CruiserCoordinates = getRandShipCoordinates(p2Gameboard, p2Cruiser);
-    const p2SubmarineCoordinates = getRandShipCoordinates(p2Gameboard, p2Submarine);
-    const p2DestroyerCoordinates = getRandShipCoordinates(p2Gameboard, p2Destroyer);
-
     p2Gameboard.placeShip(...p2CarrierCoordinates, p2Carrier);
-    p2Gameboard.placeShip(...p2BattleshipCoordinates, p2Battleship);
-    p2Gameboard.placeShip(...p2CruiserCoordinates, p2Cruiser);
-    p2Gameboard.placeShip(...p2SubmarineCoordinates, p2Submarine);
-    p2Gameboard.placeShip(...p2DestroyerCoordinates, p2Destroyer);
 
-    // place p2 (computer) ships
-    // p2.deployShip(0, 0, 'carrier');
-    // p2.deployShip(1, 0, 'battleship');
-    // p2.deployShip(2, 0, 'cruiser');
-    // p2.deployShip(3, 0, 'submarine');
-    // p2.deployShip(4, 0, 'destroyer');
+    const p2BattleshipCoordinates = getRandShipCoordinates(p2Gameboard, p2Battleship);
+    p2Gameboard.placeShip(...p2BattleshipCoordinates, p2Battleship);
+
+    const p2CruiserCoordinates = getRandShipCoordinates(p2Gameboard, p2Cruiser);
+    p2Gameboard.placeShip(...p2CruiserCoordinates, p2Cruiser);
+
+    const p2SubmarineCoordinates = getRandShipCoordinates(p2Gameboard, p2Submarine);
+    p2Gameboard.placeShip(...p2SubmarineCoordinates, p2Submarine);
+
+    const p2DestroyerCoordinates = getRandShipCoordinates(p2Gameboard, p2Destroyer);
+    p2Gameboard.placeShip(...p2DestroyerCoordinates, p2Destroyer);
 
     DOM.setup();
     addShipListeners();
